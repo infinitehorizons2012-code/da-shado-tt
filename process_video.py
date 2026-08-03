@@ -53,7 +53,7 @@ def process_funasr(audio_path):
     sentences = []
     current_sentence = []
     punc_chars = set('，。！？；：,.!?;:')
-    end_chars = set('。！？.!?')
+    end_chars = set('，。！？；：,.!?;:')
     
     timestamp_idx = 0
     for char in text_with_punc:
