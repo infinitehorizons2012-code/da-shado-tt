@@ -37,7 +37,8 @@ export default {
             body: JSON.stringify({
               event_type: 'process_video',
               client_payload: {
-                video_url: videoUrl
+                video_url: videoUrl,
+                chat_id: update.message.chat.id
               }
             })
           });

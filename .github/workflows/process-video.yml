@@ -65,3 +65,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Send success message to Telegram
+        if: success() && github.event_name == 'repository_dispatch'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ github.event.client_payload.chat_id }}
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d text="✅ Hoàn tất! Video đã xử lý xong. Xem tại: https://infinitehorizons2012-code.github.io/da-shado-tt/"
+
+      - name: Send failure message to Telegram
+        if: failure() && github.event_name == 'repository_dispatch'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ github.event.client_payload.chat_id }}
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d text="❌ Có lỗi xảy ra trong quá trình chạy GitHub Actions (có thể do lỗi cấu hình hoặc AI FunASR). Vui lòng vào GitHub để kiểm tra log chi tiết."
