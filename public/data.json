@@ -43,7 +43,9 @@
         "start": 1.39,
         "end": 1.63,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "下",
         "pinyin": "xià",
@@ -129,7 +131,9 @@
         "start": 6.21,
         "end": 6.45,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "孩",
         "pinyin": "hái",
@@ -171,7 +175,9 @@
         "start": 8.91,
         "end": 9.15,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "你",
         "pinyin": "nǐ",
@@ -264,7 +270,9 @@
         "start": 13.01,
         "end": 13.25,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "富",
         "pinyin": "fù",
@@ -320,7 +328,9 @@
         "start": 15.59,
         "end": 15.83,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "不",
         "pinyin": "bù",
@@ -348,7 +358,9 @@
         "start": 16.41,
         "end": 16.65,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "软",
         "pinyin": "ruǎn",
@@ -394,8 +406,14 @@
     ]
   ],
   "translations": [
-    "Anh hùng không màng xuất xứ, câu tiếp theo là gì?",
-    "Con cái không màng cha ruột, con cái không màng cha ruột, thấy thế có đúng không?",
-    "Anh hùng không màng xuất xứ, phú bà không màng tuổi tác, uống rượu không màng nồng độ, ăn bám (cơm mềm) mới là bến đỗ."
+    "Anh hùng không màng xuất xứ,",
+    "câu tiếp theo là gì?",
+    "Con cái không màng cha ruột,",
+    "con cái không màng cha ruột,",
+    "thấy thế có đúng không?",
+    "Anh hùng không màng xuất xứ,",
+    "phú bà không màng tuổi tác uống rượu,",
+    "không màng nồng độ,",
+    "ăn bám mới là bến đỗ."
   ]
 }
