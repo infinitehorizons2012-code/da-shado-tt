@@ -427,7 +427,8 @@
 
         // Load Data
         try {
-            const response = await fetch('data.json');
+            // Add cache buster to bypass browser caching for data.json
+            const response = await fetch('data.json?v=' + new Date().getTime());
             if (!response.ok) throw new Error('Cannot load data');
             const data = await response.json();
             
