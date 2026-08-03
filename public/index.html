@@ -348,6 +348,51 @@
         .word-char.color-4, .color-4 { color: #d35400; font-weight: bold; }
         .word-char.color-5, .color-5 { color: #16a085; font-weight: bold; }
 
+        /* Dictation Mode */
+        .dictation-active #transcriptList { display: none !important; }
+        .dictation-active #activeSentenceDisplay, 
+        .dictation-active #activeTranslationDisplay,
+        .dictation-active .toggles { display: none !important; }
+        
+        #dictationContainer {
+            display: none; width: 100%; flex-direction: column; align-items: center; gap: 15px;
+        }
+        .dictation-active #dictationContainer { display: flex; }
+        
+        .dictation-input {
+            width: 90%; padding: 15px; font-size: 18px; border: 2px solid var(--border-color);
+            border-radius: var(--border-radius); outline: none; text-align: center; transition: border-color 0.3s;
+        }
+        .dictation-input:focus { border-color: var(--primary-color); }
+        
+        .dictation-controls { display: flex; gap: 15px; }
+        
+        .btn-check {
+            background-color: var(--primary-color); color: white; border: none; padding: 10px 20px;
+            border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold;
+        }
+        .btn-check:hover { opacity: 0.9; }
+        
+        .dictation-result {
+            width: 90%; min-height: 40px; padding: 10px; text-align: center; font-size: 20px;
+            line-height: 1.8; background: #f8f9fa; border-radius: 8px;
+        }
+        .res-correct { color: #27ae60; font-weight: bold; margin: 0 4px; }
+        .res-wrong { color: #e74c3c; text-decoration: line-through; margin: 0 4px; }
+        .res-expected { color: #27ae60; font-size: 14px; margin-right: 8px; }
+
+        /* Right Header Controls */
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .btn-practice {
+            background-color: #fff; border: 1px solid var(--primary-color); color: var(--primary-color);
+            padding: 6px 12px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-practice.active { background-color: var(--primary-color); color: white; }
+        .practice-options { display: none; align-items: center; gap: 10px; font-size: 13px; }
+        .dictation-active .practice-options { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+        .opt-label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+
     </style>
 </head>
 <body>
@@ -404,13 +449,30 @@
                         <input type="checkbox" id="toggleTranslation" checked> Tiếng Việt
                     </label>
                 </div>
+
+                <div id="dictationContainer">
+                    <input type="text" class="dictation-input" id="dictationInput" placeholder="Gõ pinyin không dấu cách nhau bởi dấu cách (vd: ying xiong)..." autocomplete="off">
+                    <div class="dictation-controls">
+                        <button class="btn-check" id="btnCheckDictation">Kiểm tra (Enter)</button>
+                        <button class="btn-check" id="btnShowAnswer" style="background-color:#7f8c8d;">Xem đáp án</button>
+                    </div>
+                    <div class="dictation-result" id="dictationResult"></div>
+                </div>
             </div>
         </div>
 
         <!-- RIGHT COLUMN -->
         <div class="right-col">
-            <div class="transcript-header">
-                Transcript <span id="totalLinesHeader">0 sentences</span>
+            <div class="transcript-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>Transcript <span id="totalLinesHeader">0 sentences</span></div>
+                <div class="header-actions">
+                    <button class="btn-practice" id="btnPractice"><i class="fas fa-headphones"></i> Luyện nghe</button>
+                    <div class="practice-options" id="practiceOptions">
+                        <label class="opt-label"><input type="radio" name="dicType" value="pinyin-notone" checked> Pinyin (không dấu)</label>
+                        <label class="opt-label"><input type="radio" name="dicType" value="pinyin-tone"> Pinyin (có dấu)</label>
+                        <label class="opt-label"><input type="radio" name="dicType" value="hanzi"> Chữ Hán</label>
+                    </div>
+                </div>
             </div>
             <div class="transcript-list" id="transcriptList">
                 <!-- Transcript items injected here -->
@@ -503,6 +565,12 @@
             if (idx === activeSentenceIndex) return; // Already rendered
             activeSentenceIndex = idx;
             
+            // Clear dictation if sentence changes
+            if (isDictationMode) {
+                document.getElementById('dictationInput').value = '';
+                document.getElementById('dictationResult').innerHTML = '';
+            }
+
             // Update Top Bar Counter
             currentSentenceNum.textContent = idx >= 0 ? idx + 1 : 0;
 
@@ -681,6 +749,133 @@
             if (e.target.checked) box.classList.remove('hide-translation');
             else box.classList.add('hide-translation');
         });
+        // --- DICTATION MODE LOGIC ---
+        let isDictationMode = false;
+        let dictationType = 'pinyin-notone';
+
+        const btnPractice = document.getElementById('btnPractice');
+        const dictationInput = document.getElementById('dictationInput');
+        const dictationResult = document.getElementById('dictationResult');
+
+        btnPractice.addEventListener('click', () => {
+            isDictationMode = !isDictationMode;
+            if (isDictationMode) {
+                document.body.classList.add('dictation-active');
+                btnPractice.classList.add('active');
+                dictationInput.focus();
+                dictationResult.innerHTML = '';
+                dictationInput.value = '';
+            } else {
+                document.body.classList.remove('dictation-active');
+                btnPractice.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('input[name="dicType"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                dictationType = e.target.value;
+                dictationInput.value = '';
+                dictationResult.innerHTML = '';
+                if (dictationType === 'pinyin-notone') {
+                    dictationInput.placeholder = "Gõ pinyin không dấu cách nhau bởi dấu cách (vd: ying xiong)...";
+                } else if (dictationType === 'pinyin-tone') {
+                    dictationInput.placeholder = "Gõ pinyin có dấu (vd: yīng xióng)...";
+                } else {
+                    dictationInput.placeholder = "Gõ chữ Hán (vd: 英雄)...";
+                }
+                dictationInput.focus();
+            });
+        });
+
+        function removeTones(pinyin) {
+            const toneMap = {
+                'ā':'a', 'á':'a', 'ǎ':'a', 'à':'a',
+                'ō':'o', 'ó':'o', 'ǒ':'o', 'ò':'o',
+                'ē':'e', 'é':'e', 'ě':'e', 'è':'e',
+                'ī':'i', 'í':'i', 'ǐ':'i', 'ì':'i',
+                'ū':'u', 'ú':'u', 'ǔ':'u', 'ù':'u',
+                'ǖ':'v', 'ǘ':'v', 'ǚ':'v', 'ǜ':'v', 'ü':'v'
+            };
+            return pinyin.replace(/[āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜü]/g, match => toneMap[match]).toLowerCase();
+        }
+
+        function cleanPunctuation(str) {
+            return str.replace(/[，。？！,?!]/g, '').trim();
+        }
+
+        function checkDictation() {
+            if (activeSentenceIndex < 0) return;
+            const sentence = subData[activeSentenceIndex];
+            const userInput = dictationInput.value.trim();
+            if (!userInput) return;
+
+            let expectedArr = [];
+            let userArr = [];
+
+            if (dictationType === 'hanzi') {
+                expectedArr = sentence.map(w => cleanPunctuation(w.word)).filter(w => w);
+                // For hanzi, split by character but ignore spaces
+                userArr = userInput.replace(/\s+/g, '').split('').map(w => cleanPunctuation(w)).filter(w => w);
+            } else {
+                userArr = userInput.split(/\s+/).map(w => cleanPunctuation(w));
+                expectedArr = sentence.map(w => {
+                    let py = cleanPunctuation(w.pinyin);
+                    if (dictationType === 'pinyin-notone') {
+                        py = removeTones(py);
+                    }
+                    return py;
+                }).filter(w => w);
+            }
+
+            let html = '';
+            const maxLen = Math.max(expectedArr.length, userArr.length);
+            let isAllCorrect = true;
+
+            for (let i = 0; i < maxLen; i++) {
+                const exp = expectedArr[i] || '';
+                const usr = userArr[i] || '';
+
+                if (exp.toLowerCase() === usr.toLowerCase()) {
+                    html += `<span class="res-correct">${exp}</span>`;
+                } else {
+                    isAllCorrect = false;
+                    if (usr) {
+                        html += `<span class="res-wrong">${usr}</span>`;
+                    }
+                    if (exp) {
+                        html += `<span class="res-expected">(${exp})</span>`;
+                    }
+                }
+            }
+
+            if (isAllCorrect) {
+                html += '<br><span style="color:#27ae60; font-size: 16px;">✨ Tuyệt vời! Bạn đã gõ đúng.</span>';
+            }
+            dictationResult.innerHTML = html;
+        }
+
+        document.getElementById('btnCheckDictation').addEventListener('click', checkDictation);
+        dictationInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkDictation();
+        });
+        
+        document.getElementById('btnShowAnswer').addEventListener('click', () => {
+            if (activeSentenceIndex < 0) return;
+            const sentence = subData[activeSentenceIndex];
+            let ans = '';
+            if (dictationType === 'hanzi') {
+                ans = sentence.map(w => cleanPunctuation(w.word)).join('');
+            } else {
+                ans = sentence.map(w => {
+                    let py = cleanPunctuation(w.pinyin);
+                    if (dictationType === 'pinyin-notone') return removeTones(py);
+                    return py;
+                }).join(' ');
+            }
+            dictationInput.value = ans;
+            checkDictation();
+        });
+
     });
 </script>
 </body>
