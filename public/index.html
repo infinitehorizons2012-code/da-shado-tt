@@ -362,6 +362,7 @@
             <div class="time-display" id="durationDisp">0:00</div>
 
             <div class="control-btns">
+                <button class="ctrl-btn" id="btnLoop" title="Lặp lại câu"><i class="fas fa-redo"></i></button>
                 <button class="ctrl-btn" id="btnPrev"><i class="fas fa-step-backward"></i></button>
                 <button class="ctrl-btn play-btn" id="btnPlayPause"><i class="fas fa-pause" id="playIcon"></i></button>
                 <button class="ctrl-btn" id="btnNext"><i class="fas fa-step-forward"></i></button>
@@ -424,6 +425,7 @@
         let subData = [];
         let translations = [];
         let activeSentenceIndex = -1;
+        let isLoopingSentence = false;
 
         // Load Data
         try {
@@ -569,6 +571,18 @@
             
             renderActiveSentence(foundIdx);
 
+            // Loop logic for shadowing
+            if (isLoopingSentence && activeSentenceIndex >= 0) {
+                const currentS = subData[activeSentenceIndex];
+                if (currentS && currentS.length > 0) {
+                    const endTime = currentS[currentS.length - 1].end;
+                    if (ct >= endTime + 0.1) {
+                        videoPlayer.currentTime = currentS[0].start;
+                        videoPlayer.play();
+                    }
+                }
+            }
+
             // Highlight individual words
             if (foundIdx >= 0) {
                 const sentence = subData[foundIdx];
@@ -623,6 +637,13 @@
                 videoPlayer.currentTime = subData[nextIdx][0].start;
                 videoPlayer.play();
             }
+        });
+
+        // Loop Button
+        const btnLoop = document.getElementById('btnLoop');
+        btnLoop.addEventListener('click', () => {
+            isLoopingSentence = !isLoopingSentence;
+            btnLoop.style.color = isLoopingSentence ? 'var(--primary-color)' : '';
         });
 
         // Progress Bar Click
