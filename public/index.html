@@ -634,6 +634,19 @@
                 currentTimeDisp.textContent = formatTime(ct);
             }
 
+            // Loop logic for shadowing (check FIRST to prevent missing the gap)
+            if (isLoopingSentence && activeSentenceIndex >= 0) {
+                const currentS = subData[activeSentenceIndex];
+                if (currentS && currentS.length > 0) {
+                    const endTime = currentS[currentS.length - 1].end;
+                    if (ct >= endTime) { // Use exact endTime instead of +0.1 for tighter loop
+                        videoPlayer.currentTime = currentS[0].start;
+                        videoPlayer.play();
+                        return; // Return early so we don't accidentally set activeSentenceIndex to -1
+                    }
+                }
+            }
+
             // Find current sentence
             let foundIdx = -1;
             for (let i = 0; i < subData.length; i++) {
@@ -645,18 +658,6 @@
             }
             
             renderActiveSentence(foundIdx);
-
-            // Loop logic for shadowing
-            if (isLoopingSentence && activeSentenceIndex >= 0) {
-                const currentS = subData[activeSentenceIndex];
-                if (currentS && currentS.length > 0) {
-                    const endTime = currentS[currentS.length - 1].end;
-                    if (ct >= endTime + 0.1) {
-                        videoPlayer.currentTime = currentS[0].start;
-                        videoPlayer.play();
-                    }
-                }
-            }
 
             // Highlight individual words
             if (foundIdx >= 0) {
