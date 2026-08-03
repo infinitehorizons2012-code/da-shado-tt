@@ -67,6 +67,18 @@
         .word-group.active .pinyin {
             color: #ffb74d;
         }
+        .translation-text {
+            flex-basis: 100%;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #888888;
+            font-style: italic;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .active-sentence .translation-text {
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -133,6 +145,13 @@
                             sentenceEl: sentenceDiv
                         });
                     });
+                    
+                    if (data.translations && data.translations[sIdx]) {
+                        const translationDiv = document.createElement('div');
+                        translationDiv.className = 'translation-text';
+                        translationDiv.textContent = data.translations[sIdx];
+                        sentenceDiv.appendChild(translationDiv);
+                    }
                     
                     subtitlesBox.appendChild(sentenceDiv);
                 });
