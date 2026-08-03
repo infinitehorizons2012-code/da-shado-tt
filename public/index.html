@@ -552,6 +552,7 @@
                 item.appendChild(txt);
                 
                 item.addEventListener('click', () => {
+                    activeSentenceIndex = idx; // Force update to prevent loop trapping
                     videoPlayer.currentTime = sentence[0].start;
                     videoPlayer.play();
                 });
@@ -639,10 +640,11 @@
                 const currentS = subData[activeSentenceIndex];
                 if (currentS && currentS.length > 0) {
                     const endTime = currentS[currentS.length - 1].end;
-                    if (ct >= endTime) { // Use exact endTime instead of +0.1 for tighter loop
+                    // If we just passed the end of the sentence naturally (not a huge seek)
+                    if (ct >= endTime && ct <= endTime + 1.0) { 
                         videoPlayer.currentTime = currentS[0].start;
                         videoPlayer.play();
-                        return; // Return early so we don't accidentally set activeSentenceIndex to -1
+                        return; 
                     }
                 }
             }
@@ -700,7 +702,8 @@
 
         document.getElementById('btnPrev').addEventListener('click', () => {
             if (activeSentenceIndex > 0) {
-                videoPlayer.currentTime = subData[activeSentenceIndex - 1][0].start;
+                activeSentenceIndex = activeSentenceIndex - 1; // Force update
+                videoPlayer.currentTime = subData[activeSentenceIndex][0].start;
                 videoPlayer.play();
             } else if (activeSentenceIndex === 0) {
                  videoPlayer.currentTime = subData[0][0].start;
@@ -710,6 +713,7 @@
         document.getElementById('btnNext').addEventListener('click', () => {
             let nextIdx = activeSentenceIndex >= 0 ? activeSentenceIndex + 1 : 0;
             if (nextIdx < subData.length) {
+                activeSentenceIndex = nextIdx; // Force update
                 videoPlayer.currentTime = subData[nextIdx][0].start;
                 videoPlayer.play();
             }
