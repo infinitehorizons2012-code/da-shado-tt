@@ -552,7 +552,7 @@
                 item.appendChild(txt);
                 
                 item.addEventListener('click', () => {
-                    activeSentenceIndex = idx; // Force update to prevent loop trapping
+                    renderActiveSentence(idx); // Update UI immediately to prevent loop trapping
                     videoPlayer.currentTime = sentence[0].start;
                     videoPlayer.play();
                 });
@@ -702,8 +702,9 @@
 
         document.getElementById('btnPrev').addEventListener('click', () => {
             if (activeSentenceIndex > 0) {
-                activeSentenceIndex = activeSentenceIndex - 1; // Force update
-                videoPlayer.currentTime = subData[activeSentenceIndex][0].start;
+                const prevIdx = activeSentenceIndex - 1;
+                renderActiveSentence(prevIdx); // Force update UI
+                videoPlayer.currentTime = subData[prevIdx][0].start;
                 videoPlayer.play();
             } else if (activeSentenceIndex === 0) {
                  videoPlayer.currentTime = subData[0][0].start;
@@ -713,7 +714,7 @@
         document.getElementById('btnNext').addEventListener('click', () => {
             let nextIdx = activeSentenceIndex >= 0 ? activeSentenceIndex + 1 : 0;
             if (nextIdx < subData.length) {
-                activeSentenceIndex = nextIdx; // Force update
+                renderActiveSentence(nextIdx); // Force update UI
                 videoPlayer.currentTime = subData[nextIdx][0].start;
                 videoPlayer.play();
             }
