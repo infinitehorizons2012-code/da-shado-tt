@@ -314,7 +314,9 @@
         "start": 14.93,
         "end": 15.17,
         "confidence": 0.99
-      },
+      }
+    ],
+    [
       {
         "word": "喝",
         "pinyin": "hē",
@@ -328,9 +330,7 @@
         "start": 15.59,
         "end": 15.83,
         "confidence": 0.99
-      }
-    ],
-    [
+      },
       {
         "word": "不",
         "pinyin": "bù",
@@ -412,8 +412,8 @@
     "con cái không màng cha ruột,",
     "thấy thế có đúng không?",
     "Anh hùng không màng xuất xứ,",
-    "phú bà không màng tuổi tác uống rượu,",
-    "không màng nồng độ,",
+    "phú bà không màng tuổi tác,",
+    "uống rượu không màng nồng độ,",
     "ăn bám mới là bến đỗ."
   ]
 }
