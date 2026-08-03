@@ -45,6 +45,12 @@ jobs:
             echo "URL=${{ github.event.inputs.video_url }}" >> $GITHUB_ENV
           fi
 
+      - name: Cache ModelScope Models
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/modelscope
+          key: ${{ runner.os }}-modelscope-funasr
+
       - name: Process Video with FunASR
         env:
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
