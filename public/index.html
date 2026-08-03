@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Da Shado TT - Trình luyện nói tiếng Trung</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        .subtitles-container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            height: 400px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .sentence {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sentence.active-sentence {
+            background-color: #2c2c2c;
+        }
+        .word-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .pinyin {
+            font-size: 14px;
+            color: #aaaaaa;
+            margin-bottom: 2px;
+        }
+        .character {
+            font-size: 24px;
+            transition: color 0.1s;
+        }
+        .word-group.active .character {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .word-group.active .pinyin {
+            color: #ffb74d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #ff9800;">Da Shado TT</h1>
+        <video id="videoPlayer" controls playsinline>
+            <source src="" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ video.
+        </video>
+        <div class="subtitles-container" id="subtitlesBox">
+            <!-- Subtitles will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('Không thể tải dữ liệu phụ đề');
+                const data = await response.json();
+                
+                const videoPlayer = document.getElementById('videoPlayer');
+                const subtitlesBox = document.getElementById('subtitlesBox');
+                
+                // Set video source
+                videoPlayer.src = data.video_url;
+                
+                // Render subtitles
+                const wordsElements = []; // Store references for fast updating
+                
+                data.subtitles.forEach((sentenceData, sIdx) => {
+                    const sentenceDiv = document.createElement('div');
+                    sentenceDiv.className = 'sentence';
+                    sentenceDiv.id = `sentence-${sIdx}`;
+                    
+                    sentenceData.forEach((wordData) => {
+                        const wordGroup = document.createElement('div');
+                        wordGroup.className = 'word-group';
+                        wordGroup.dataset.start = wordData.start;
+                        wordGroup.dataset.end = wordData.end;
+                        
+                        // Click to seek
+                        wordGroup.addEventListener('click', () => {
+                            videoPlayer.currentTime = wordData.start;
+                            videoPlayer.play();
+                        });
+                        
+                        const pinyinDiv = document.createElement('div');
+                        pinyinDiv.className = 'pinyin';
+                        pinyinDiv.textContent = wordData.pinyin;
+                        
+                        const charDiv = document.createElement('div');
+                        charDiv.className = 'character';
+                        charDiv.textContent = wordData.word;
+                        
+                        wordGroup.appendChild(pinyinDiv);
+                        wordGroup.appendChild(charDiv);
+                        sentenceDiv.appendChild(wordGroup);
+                        
+                        wordsElements.push({
+                            element: wordGroup,
+                            start: wordData.start,
+                            end: wordData.end,
+                            sentenceEl: sentenceDiv
+                        });
+                    });
+                    
+                    subtitlesBox.appendChild(sentenceDiv);
+                });
+                
+                // Sync subtitles with video
+                videoPlayer.addEventListener('timeupdate', () => {
+                    const currentTime = videoPlayer.currentTime;
+                    let activeSentenceSet = false;
+                    
+                    wordsElements.forEach(item => {
+                        if (currentTime >= item.start && currentTime <= item.end) {
+                            item.element.classList.add('active');
+                            if (!activeSentenceSet) {
+                                item.sentenceEl.classList.add('active-sentence');
+                                // Scroll to the active sentence if not in view
+                                const boxRect = subtitlesBox.getBoundingClientRect();
+                                const sentRect = item.sentenceEl.getBoundingClientRect();
+                                if (sentRect.top < boxRect.top || sentRect.bottom > boxRect.bottom) {
+                                    item.sentenceEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                                activeSentenceSet = true;
+                            }
+                        } else {
+                            item.element.classList.remove('active');
+                            item.sentenceEl.classList.remove('active-sentence');
+                        }
+                    });
+                });
+                
+            } catch (error) {
+                console.error("Error loading app:", error);
+                document.getElementById('subtitlesBox').innerHTML = `<p style="color:red; text-align:center;">Lỗi tải dữ liệu. Vui lòng đảm bảo data.json đã được tạo.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

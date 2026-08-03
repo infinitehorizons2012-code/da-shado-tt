@@ -1,0 +1,7 @@
+funasr
+modelscope
+torchaudio
+pypinyin
+cloudinary
+yt-dlp
+ffmpeg-python
