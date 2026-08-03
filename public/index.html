@@ -552,9 +552,7 @@
                 item.appendChild(txt);
                 
                 item.addEventListener('click', () => {
-                    renderActiveSentence(idx); // Update UI immediately to prevent loop trapping
-                    videoPlayer.currentTime = sentence[0].start;
-                    videoPlayer.play();
+                    seekToSentence(idx);
                 });
                 
                 listEl.appendChild(item);
@@ -625,8 +623,22 @@
             }
         }
 
+        let isSeeking = false;
+        videoPlayer.addEventListener('seeking', () => { isSeeking = true; });
+        videoPlayer.addEventListener('seeked', () => { isSeeking = false; });
+
+        function seekToSentence(idx) {
+            if (idx < 0 || idx >= subData.length) return;
+            isSeeking = true;
+            renderActiveSentence(idx);
+            videoPlayer.currentTime = subData[idx][0].start;
+            videoPlayer.play();
+        }
+
         // Video Time Update
         videoPlayer.addEventListener('timeupdate', () => {
+            if (isSeeking) return; // Prevent old time updates from interfering during a seek
+
             const ct = videoPlayer.currentTime;
             
             // Update progress bar
@@ -640,8 +652,8 @@
                 const currentS = subData[activeSentenceIndex];
                 if (currentS && currentS.length > 0) {
                     const endTime = currentS[currentS.length - 1].end;
-                    // If we just passed the end of the sentence naturally (not a huge seek)
-                    if (ct >= endTime && ct <= endTime + 1.0) { 
+                    // If we just passed the end of the sentence naturally
+                    if (ct >= endTime && ct <= endTime + 0.3) { 
                         videoPlayer.currentTime = currentS[0].start;
                         videoPlayer.play();
                         return; 
@@ -702,21 +714,16 @@
 
         document.getElementById('btnPrev').addEventListener('click', () => {
             if (activeSentenceIndex > 0) {
-                const prevIdx = activeSentenceIndex - 1;
-                renderActiveSentence(prevIdx); // Force update UI
-                videoPlayer.currentTime = subData[prevIdx][0].start;
-                videoPlayer.play();
+                seekToSentence(activeSentenceIndex - 1);
             } else if (activeSentenceIndex === 0) {
-                 videoPlayer.currentTime = subData[0][0].start;
+                 seekToSentence(0);
             }
         });
 
         document.getElementById('btnNext').addEventListener('click', () => {
             let nextIdx = activeSentenceIndex >= 0 ? activeSentenceIndex + 1 : 0;
             if (nextIdx < subData.length) {
-                renderActiveSentence(nextIdx); // Force update UI
-                videoPlayer.currentTime = subData[nextIdx][0].start;
-                videoPlayer.play();
+                seekToSentence(nextIdx);
             }
         });
 
