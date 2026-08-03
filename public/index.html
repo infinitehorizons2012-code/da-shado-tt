@@ -661,12 +661,14 @@
                 }
             }
 
-            // Find current sentence
+            // Find current sentence (iterate backwards to prioritize the most recently started sentence in case of overlapping buffers)
             let foundIdx = -1;
-            for (let i = 0; i < subData.length; i++) {
+            for (let i = subData.length - 1; i >= 0; i--) {
                 const s = subData[i];
-                if (s.length > 0 && ct >= s[0].start && ct <= s[s.length - 1].end + 0.5) { // Added 0.5s buffer
-                    foundIdx = i;
+                if (s.length > 0 && ct >= s[0].start) {
+                    if (ct <= s[s.length - 1].end + 0.5) {
+                        foundIdx = i;
+                    }
                     break;
                 }
             }
