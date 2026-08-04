@@ -77,6 +77,21 @@ jobs:
           fi
           python process_video.py
 
+      - name: Build Commercial HTML and Send to Telegram
+        if: env.CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="🎁 Đang đóng gói bản thương mại (HTML Offline)..."
+          python build.py
+          HTML_FILE=$(ls *.html | head -n 1)
+          if [ -n "$HTML_FILE" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
+              -F chat_id=${{ env.CHAT_ID }} \
+              -F document=@"$HTML_FILE" \
+              -F caption="🎉 Đây là file HTML thương mại độc lập của bạn! Tải về là dùng được ngay không cần mạng."
+          fi
+
       - name: Notify Deploying
         if: env.CHAT_ID != ''
         env:
