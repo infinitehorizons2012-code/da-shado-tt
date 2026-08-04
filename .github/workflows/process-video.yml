@@ -83,6 +83,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add public/data.json
           git commit -m "Auto-update data.json from Telegram AI extraction" || echo "No changes to commit"
+          git pull --rebase origin main || echo "No rebase needed"
           git push
 
       - name: Build Commercial HTML and Send to Telegram
