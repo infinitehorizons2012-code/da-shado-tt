@@ -47,23 +47,33 @@ jobs:
             echo "CHAT_ID=" >> $GITHUB_ENV
           fi
 
+      - name: Cache ModelScope Models
+        id: cache-models
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/modelscope
+          key: ${{ runner.os }}-modelscope-funasr
+
       - name: Notify Setup and Cache Status
         if: env.CHAT_ID != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
-          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="⚡ Bắt đầu quy trình xử lý. Sẽ sử dụng Groq API (Whisper) để bóc băng siêu tốc..."
+          if [ "${{ steps.cache-models.outputs.cache-hit }}" == "true" ]; then
+            curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="⚡ Đã tìm thấy bộ nhớ đệm (Cache)! Hệ thống đã sẵn sàng. Ước tính: ~1-2 phút."
+          else
+            curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="🐢 Không tìm thấy bộ nhớ đệm. Đang tải lại mô hình AI (vài trăm MB). Ước tính: ~4-5 phút."
+          fi
 
-      - name: Process Video with Groq API
+      - name: Process Video with FunASR
         env:
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           VIDEO_URL: ${{ env.URL }}
         run: |
           if [ -n "${{ env.CHAT_ID }}" ]; then
-             curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="🧠 Đang gửi âm thanh qua Groq API để bóc băng bằng Whisper..."
+             curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="🧠 Đang bóc băng phụ đề bằng AI FunASR..."
           fi
           python process_video.py
 
@@ -113,4 +123,4 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
-          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="❌ Ối! Có lỗi xảy ra trong quá trình chạy (có thể do lỗi mạng tải thư viện hoặc Groq API). Sẽ không có trang web nào được tạo ra. Vui lòng vào tài khoản GitHub của bạn để kiểm tra Actions log."
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="❌ Ối! Có lỗi xảy ra trong quá trình chạy (có thể do lỗi mạng tải thư viện hoặc AI FunASR). Sẽ không có trang web nào được tạo ra. Vui lòng vào tài khoản GitHub của bạn để kiểm tra Actions log."

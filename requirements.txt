@@ -1,4 +1,7 @@
-requests
+torch
+torchaudio
+funasr
+modelscope
 pypinyin
 cloudinary
 yt-dlp
