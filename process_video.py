@@ -53,14 +53,15 @@ def process_whisper_groq(audio_chunks, chunk_duration=60):
     }
     
     all_sentences = []
-    punc_chars = set('，。！？；：,.!?;:')
+    
+    # Using unicode escape sequences to avoid Windows encoding corruption
+    punc_chars = set('\uff0c\u3002\uff01\uff1f\uff1b\uff1a,.!?;:')
+    end_chars = set('\uff0c\u3002\uff01\uff1f\uff1b\uff1a,.!?;:')
     
     for idx, chunk_path in enumerate(audio_chunks):
         print(f"Processing {chunk_path}...")
         time_offset = idx * chunk_duration
         
-        # We use a very basic prompt without Vietnamese characters to avoid encoding issues on Windows runners,
-        # but keep temperature at 0 for stability.
         data = {
             "model": "whisper-large-v3",
             "response_format": "verbose_json",
@@ -103,6 +104,11 @@ def process_whisper_groq(audio_chunks, chunk_duration=60):
                 if char in punc_chars:
                     if current_sentence:
                         current_sentence[-1]['word'] += char
+                    # Split sentence if it's an ending punctuation
+                    if char in end_chars:
+                        if current_sentence:
+                            all_sentences.append(current_sentence)
+                            current_sentence = []
                 else:
                     pinyin_list = pypinyin.pinyin(char, style=pypinyin.Style.TONE)
                     py = pinyin_list[0][0] if pinyin_list else ""
