@@ -503,9 +503,18 @@
             const data = await response.json();
             
             videoPlayer.src = data.video_url;
-            subData = data.subtitles || [];
+            let rawSubData = data.subtitles || [];
+            subData = [];
             translations = data.translations || [];
             
+            rawSubData.forEach((s, idx) => {
+                if (s.length > 0 && s[0].translation) {
+                    translations[idx] = s[0].translation;
+                    subData.push(s.slice(1));
+                } else {
+                    subData.push(s);
+                }
+            });
             document.getElementById('totalSentenceNum').textContent = subData.length;
             document.getElementById('totalLinesHeader').textContent = `${subData.length} sentences`;
 
@@ -534,8 +543,7 @@
             listEl.innerHTML = '';
             
             subData.forEach((sentence, idx) => {
-                const words = (sentence.length > 0 && sentence[0].translation) ? sentence.slice(1) : sentence;
-                const text = words.map(w => w.word).join('');
+                const text = sentence.map(w => w.word).join('');
                 
                 const item = document.createElement('div');
                 item.className = 'ts-item';
@@ -582,16 +590,7 @@
 
             if (idx < 0 || idx >= subData.length) return;
 
-            let sentence = subData[idx];
-            let currentTranslation = "";
-            
-            // Nếu phần tử đầu tiên là object chứa translation (do enrich_data.py thêm vào)
-            if (sentence.length > 0 && sentence[0].translation) {
-                currentTranslation = sentence[0].translation;
-                sentence = sentence.slice(1); // Cắt bỏ phần tử đầu tiên để lặp các từ
-            } else if (translations[idx]) {
-                currentTranslation = translations[idx];
-            }
+            const sentence = subData[idx];
             
             sentence.forEach((w, wIdx) => {
                 if (!w.word) return; // Bỏ qua nếu không phải là từ hợp lệ
@@ -626,8 +625,8 @@
                 displayEl.appendChild(wItem);
             });
 
-            if (currentTranslation) {
-                transEl.innerHTML = currentTranslation;
+            if (translations[idx]) {
+                transEl.innerHTML = translations[idx];
             }
 
             // Highlight active in right column and scroll
@@ -836,8 +835,7 @@
 
         function checkDictation() {
             if (activeSentenceIndex < 0) return;
-            let sentence = subData[activeSentenceIndex];
-            if (sentence.length > 0 && sentence[0].translation) sentence = sentence.slice(1);
+            const sentence = subData[activeSentenceIndex];
             
             const userInput = dictationInput.value.trim();
             if (!userInput) return;
@@ -894,8 +892,7 @@
         
         document.getElementById('btnShowAnswer').addEventListener('click', () => {
             if (activeSentenceIndex < 0) return;
-            let sentence = subData[activeSentenceIndex];
-            if (sentence.length > 0 && sentence[0].translation) sentence = sentence.slice(1);
+            const sentence = subData[activeSentenceIndex];
             
             let ans = '';
             if (dictationType === 'hanzi') {
