@@ -15,12 +15,15 @@ def trigger_antigravity():
     prompt = "Tớ vừa cào xong video mới, cậu tiến hành git pull lấy dữ liệu về, dịch tiếng Việt, tô màu và đóng gói HTML giúp tớ nhé!"
     
     try:
-        # Chạy Antigravity dưới dạng tiến trình độc lập (Isolated Process)
-        subprocess.Popen([
-            ANTIGRAVITY_CMD, "run", prompt,
-            "--workspace", WORKSPACE_PATH
-        ], creationflags=subprocess.CREATE_NEW_CONSOLE) # Mở cửa sổ CMD mới trên Windows
-        print("🚀 Tiến trình Antigravity đã được mở thành công!")
+        import sys
+        python_exe = sys.executable
+        # Mở một cửa sổ CMD mới (hiển thị rõ ràng trên màn hình) và chạy file SDK
+        subprocess.Popen(
+            f'start cmd /k "{python_exe}" run_agent.py', 
+            shell=True,
+            cwd=WORKSPACE_PATH
+        )
+        print("🚀 Đã mở cửa sổ Antigravity SDK thành công!")
     except Exception as e:
         print(f"❌ Lỗi khi khởi động Antigravity: {e}")
 

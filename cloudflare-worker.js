@@ -21,37 +21,15 @@ export default {
 
         if (urls && urls.length > 0) {
           const videoUrl = urls[0];
-
-          // Trigger GitHub Repository Dispatch
-          // NOTE: Replace 'infinitehorizons2012-code' and 'da-shado-tt' with your actual username and repo name if different
-          const githubRepoUrl = `https://api.github.com/repos/infinitehorizons2012-code/da-shado-tt/dispatches`;
           
-          const githubResponse = await fetch(githubRepoUrl, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/vnd.github.v3+json',
-              'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-              'Content-Type': 'application/json',
-              'User-Agent': 'Cloudflare-Worker'
-            },
-            body: JSON.stringify({
-              event_type: 'process_video',
-              client_payload: {
-                video_url: videoUrl,
-                chat_id: update.message.chat.id
-              }
-            })
-          });
-
-          if (githubResponse.ok) {
-            // Reply back to Telegram
-            await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, "Đã nhận link! Hệ thống đang xử lý và sẽ đẩy lên web sau ít phút.");
-            return new Response("OK", { status: 200 });
-          } else {
-            const errorText = await githubResponse.text();
-            await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, `Lỗi khi gọi GitHub: ${errorText}`);
-            return new Response("GitHub Error", { status: 500 });
-          }
+          const promptMessage = `💡 **BƯỚC 1: BÓC BĂNG VIDEO**\n\nBạn hãy mở **Antigravity IDE** trên máy tính lên, copy câu lệnh dưới đây và gửi cho AI:\n\n👉 *"Tớ muốn làm bài học từ video này: ${videoUrl}\nCậu hãy chạy file process_video.py để tải video và bóc băng lưu vào data.json giúp tớ nhé!"*`;
+          
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, promptMessage);
+          return new Response("OK", { status: 200 });
+        } else if (text === "STEP_2") {
+          const promptMessage = "💡 **BƯỚC 2: PHÂN TÍCH HỌC THUẬT**\n\nBạn hãy mở **Antigravity IDE** lên, copy câu lệnh dưới đây và gửi cho AI:\n\n👉 *\"Tớ vừa bóc xong phụ đề video mới lưu ở file public/data.json, cậu hãy tiến hành dịch thuật Hán - Việt, phân tích ngữ pháp, Hán Nôm, tô màu từ vựng và cập nhật file giúp tớ nhé!\"*";
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, promptMessage);
+          return new Response("OK", { status: 200 });
         } else {
           // No URL found in message
           await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, "Vui lòng gửi cho tôi một đường link video hợp lệ (YouTube, TikTok, Douyin...).");
