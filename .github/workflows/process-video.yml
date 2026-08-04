@@ -77,6 +77,14 @@ jobs:
           fi
           python process_video.py
 
+      - name: Commit and push data.json to repository
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/data.json
+          git commit -m "Auto-update data.json from Telegram AI extraction" || echo "No changes to commit"
+          git push
+
       - name: Build Commercial HTML and Send to Telegram
         if: env.CHAT_ID != ''
         env:
