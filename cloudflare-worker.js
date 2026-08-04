@@ -57,8 +57,8 @@ export default {
 
       // XỬ LÝ BƯỚC 3: ĐÓNG GÓI TRÊN CLOUD
       if (data === "STEP_3") {
-        await sendMessage(chatId, "🚀 Đang đóng gói bản HTML Thương Mại trên Đám mây. File sẽ sớm được gửi lại cho bạn!");
-        await triggerGithubAction("process_video", { chat_id: chatId }); // Tuỳ biến event_type theo Workflow Bước 3 của bạn
+        await sendMessage(chatId, "📦 Đang đóng gói bản HTML Thương Mại trên Đám mây. File sẽ sớm được gửi lại cho bạn!");
+        ctx.waitUntil(triggerGithubAction("build_html", { chat_id: chatId })); // Gọi luồng build-html
         return new Response("OK");
       }
     }

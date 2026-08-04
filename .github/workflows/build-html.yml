@@ -1,0 +1,62 @@
+name: Build Commercial HTML
+
+on:
+  repository_dispatch:
+    types: [build_html]
+  workflow_dispatch:
+    inputs:
+      chat_id:
+        description: 'Telegram Chat ID to send the HTML file'
+        required: true
+
+jobs:
+  build-and-send:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Extract Chat ID
+        id: get_chat_id
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "CHAT_ID=${{ github.event.client_payload.chat_id }}" >> $GITHUB_ENV
+          else
+            echo "CHAT_ID=${{ github.event.inputs.chat_id }}" >> $GITHUB_ENV
+          fi
+
+      - name: Notify Building
+        if: env.CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
+            -d chat_id=${{ env.CHAT_ID }} \
+            -d text="📦 Đang đóng gói bản thương mại (HTML Offline). Vui lòng đợi trong giây lát..."
+
+      - name: Build HTML
+        run: |
+          python build.py
+
+      - name: Send Document to Telegram
+        if: env.CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          HTML_FILE=$(ls *.html | head -n 1)
+          if [ -n "$HTML_FILE" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
+              -F chat_id=${{ env.CHAT_ID }} \
+              -F document=@"$HTML_FILE" \
+              -F caption="🎉 Đây là file HTML bài học hoàn chỉnh của bạn! Tải về là mở được ngay không cần mạng."
+          else
+            curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
+              -d chat_id=${{ env.CHAT_ID }} \
+              -d text="❌ Lỗi: Không tìm thấy file HTML nào được tạo ra."
+          fi

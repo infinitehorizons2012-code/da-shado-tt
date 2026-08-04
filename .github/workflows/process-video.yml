@@ -86,50 +86,16 @@ jobs:
           git pull --rebase origin main || echo "No rebase needed"
           git push
 
-      - name: Build Commercial HTML and Send to Telegram
-        if: env.CHAT_ID != ''
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        run: |
-          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="🎁 Đang đóng gói bản thương mại (HTML Offline)..."
-          python build.py
-          HTML_FILE=$(ls *.html | head -n 1)
-          if [ -n "$HTML_FILE" ]; then
-            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
-              -F chat_id=${{ env.CHAT_ID }} \
-              -F document=@"$HTML_FILE" \
-              -F caption="🎉 Đây là file HTML thương mại độc lập của bạn! Tải về là dùng được ngay không cần mạng."
-          fi
-
-      - name: Notify Deploying
-        if: env.CHAT_ID != ''
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        run: |
-          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="🚀 Xử lý xong AI! Đang đẩy video và giao diện lên mạng..."
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './public'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
       - name: Send success message to Telegram
         if: success() && env.CHAT_ID != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
-          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="✅ Hoàn tất! Bạn có thể xem ngay tại: https://infinitehorizons2012-code.github.io/da-shado-tt/"
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="✅ Bóc băng xong! Dữ liệu đã lưu vào Github. Bạn có thể bấm nút BƯỚC 2!"
 
       - name: Send failure message to Telegram
         if: failure() && env.CHAT_ID != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
-          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="❌ Ối! Có lỗi xảy ra trong quá trình chạy (có thể do lỗi mạng tải thư viện hoặc AI FunASR). Sẽ không có trang web nào được tạo ra. Vui lòng vào tài khoản GitHub của bạn để kiểm tra Actions log."
+          curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${{ env.CHAT_ID }} -d text="❌ Lỗi: Quá trình bóc băng thất bại. Vui lòng kiểm tra Github Actions log."
