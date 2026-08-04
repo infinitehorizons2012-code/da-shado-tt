@@ -534,7 +534,8 @@
             listEl.innerHTML = '';
             
             subData.forEach((sentence, idx) => {
-                const text = sentence.map(w => w.word).join('');
+                const words = (sentence.length > 0 && sentence[0].translation) ? sentence.slice(1) : sentence;
+                const text = words.map(w => w.word).join('');
                 
                 const item = document.createElement('div');
                 item.className = 'ts-item';
@@ -581,9 +582,19 @@
 
             if (idx < 0 || idx >= subData.length) return;
 
-            const sentence = subData[idx];
+            let sentence = subData[idx];
+            let currentTranslation = "";
+            
+            // Nếu phần tử đầu tiên là object chứa translation (do enrich_data.py thêm vào)
+            if (sentence.length > 0 && sentence[0].translation) {
+                currentTranslation = sentence[0].translation;
+                sentence = sentence.slice(1); // Cắt bỏ phần tử đầu tiên để lặp các từ
+            } else if (translations[idx]) {
+                currentTranslation = translations[idx];
+            }
             
             sentence.forEach((w, wIdx) => {
+                if (!w.word) return; // Bỏ qua nếu không phải là từ hợp lệ
                 const wItem = document.createElement('div');
                 wItem.className = 'word-item';
                 wItem.id = `w-item-${idx}-${wIdx}`;
@@ -596,7 +607,12 @@
                 
                 const char = document.createElement('div');
                 char.className = 'word-char';
-                if (w.colorClass) char.classList.add(w.colorClass);
+                if (w.color) {
+                    char.style.color = w.color;
+                    char.style.fontWeight = 'bold';
+                } else if (w.colorClass) {
+                    char.classList.add(w.colorClass);
+                }
                 char.textContent = w.word;
                 
                 wItem.appendChild(pinyin);
@@ -610,8 +626,8 @@
                 displayEl.appendChild(wItem);
             });
 
-            if (translations[idx]) {
-                transEl.innerHTML = translations[idx];
+            if (currentTranslation) {
+                transEl.innerHTML = currentTranslation;
             }
 
             // Highlight active in right column and scroll
@@ -820,7 +836,9 @@
 
         function checkDictation() {
             if (activeSentenceIndex < 0) return;
-            const sentence = subData[activeSentenceIndex];
+            let sentence = subData[activeSentenceIndex];
+            if (sentence.length > 0 && sentence[0].translation) sentence = sentence.slice(1);
+            
             const userInput = dictationInput.value.trim();
             if (!userInput) return;
 
@@ -876,7 +894,9 @@
         
         document.getElementById('btnShowAnswer').addEventListener('click', () => {
             if (activeSentenceIndex < 0) return;
-            const sentence = subData[activeSentenceIndex];
+            let sentence = subData[activeSentenceIndex];
+            if (sentence.length > 0 && sentence[0].translation) sentence = sentence.slice(1);
+            
             let ans = '';
             if (dictationType === 'hanzi') {
                 ans = sentence.map(w => cleanPunctuation(w.word)).join('');
