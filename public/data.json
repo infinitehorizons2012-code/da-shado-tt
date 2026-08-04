@@ -1,506 +1,232 @@
 {
-  "video_url": "https://res.cloudinary.com/zopjocdi/video/upload/v1785745061/jeo9f3xe5hdnol2w65hx.mp4",
+  "video_url": "https://res.cloudinary.com/zopjocdi/video/upload/v1785848121/or3ihxettdu3lialupbf.mp4",
   "subtitles": [
     [
       {
-        "word": "英",
-        "pinyin": "yīng",
-        "start": 0.33,
-        "end": 0.57,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "哥",
+        "pinyin": "gē",
+        "start": 0.34,
+        "end": 0.54,
+        "confidence": 0.99
       },
       {
-        "word": "雄",
-        "pinyin": "xióng",
-        "start": 0.57,
-        "end": 0.81,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "哥",
+        "pinyin": "gē",
+        "start": 0.54,
+        "end": 0.78,
+        "confidence": 0.99
       },
       {
-        "word": "不",
-        "pinyin": "bù",
-        "start": 0.83,
-        "end": 0.97,
-        "confidence": 0.99,
-        "colorClass": "color-2"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 1.16,
+        "end": 1.4,
+        "confidence": 0.99
       },
       {
-        "word": "问",
-        "pinyin": "wèn",
-        "start": 0.97,
-        "end": 1.19,
-        "confidence": 0.99,
-        "colorClass": "color-2"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 1.44,
+        "end": 1.68,
+        "confidence": 0.99
       },
       {
-        "word": "出",
-        "pinyin": "chū",
-        "start": 1.19,
-        "end": 1.39,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "处，",
-        "pinyin": "chù",
-        "start": 1.39,
-        "end": 1.63,
-        "confidence": 0.99,
-        "colorClass": "color-3"
+        "word": "呢？",
+        "pinyin": "ne",
+        "start": 1.68,
+        "end": 1.92,
+        "confidence": 0.99
       }
     ],
     [
       {
-        "word": "下",
-        "pinyin": "xià",
-        "start": 2.01,
-        "end": 2.21,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 2.54,
+        "end": 2.78,
+        "confidence": 0.99
       },
       {
-        "word": "一",
-        "pinyin": "yī",
-        "start": 2.21,
-        "end": 2.33,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 2.82,
+        "end": 3.0,
+        "confidence": 0.99
       },
       {
-        "word": "句",
-        "pinyin": "jù",
-        "start": 2.33,
-        "end": 2.49,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "在",
+        "pinyin": "zài",
+        "start": 3.0,
+        "end": 3.2,
+        "confidence": 0.99
       },
       {
-        "word": "是",
-        "pinyin": "shì",
-        "start": 2.49,
-        "end": 2.61,
-        "confidence": 0.99,
-        "colorClass": "color-2"
+        "word": "厨",
+        "pinyin": "chú",
+        "start": 3.2,
+        "end": 3.4,
+        "confidence": 0.99
+      },
+      {
+        "word": "房，",
+        "pinyin": "fáng",
+        "start": 3.4,
+        "end": 3.64,
+        "confidence": 0.99
+      }
+    ],
+    [
+      {
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 4.08,
+        "end": 4.3,
+        "confidence": 0.99
+      },
+      {
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 4.3,
+        "end": 4.5,
+        "confidence": 0.99
+      },
+      {
+        "word": "在",
+        "pinyin": "zài",
+        "start": 4.5,
+        "end": 4.72,
+        "confidence": 0.99
+      },
+      {
+        "word": "做",
+        "pinyin": "zuò",
+        "start": 4.72,
+        "end": 4.96,
+        "confidence": 0.99
       },
       {
         "word": "什",
         "pinyin": "shén",
-        "start": 2.61,
-        "end": 2.73,
-        "confidence": 0.99,
-        "colorClass": "color-3"
+        "start": 4.98,
+        "end": 5.14,
+        "confidence": 0.99
       },
       {
         "word": "么？",
         "pinyin": "me",
-        "start": 2.73,
-        "end": 3.06,
-        "confidence": 0.99,
-        "colorClass": "color-3"
+        "start": 5.14,
+        "end": 5.38,
+        "confidence": 0.99
       }
     ],
     [
       {
-        "word": "孩",
-        "pinyin": "hái",
-        "start": 5.21,
-        "end": 5.43,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 5.66,
+        "end": 5.84,
+        "confidence": 0.99
       },
       {
-        "word": "子",
-        "pinyin": "zi",
-        "start": 5.43,
-        "end": 5.63,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 5.84,
+        "end": 6.02,
+        "confidence": 0.99
       },
       {
-        "word": "不",
-        "pinyin": "bù",
-        "start": 5.63,
-        "end": 5.79,
-        "confidence": 0.99,
-        "colorClass": "color-2"
+        "word": "在",
+        "pinyin": "zài",
+        "start": 6.02,
+        "end": 6.22,
+        "confidence": 0.99
       },
       {
-        "word": "问",
-        "pinyin": "wèn",
-        "start": 5.79,
-        "end": 6.01,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "生",
-        "pinyin": "shēng",
-        "start": 6.01,
-        "end": 6.21,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "父，",
-        "pinyin": "fù",
-        "start": 6.21,
-        "end": 6.45,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      }
-    ],
-    [
-      {
-        "word": "孩",
-        "pinyin": "hái",
-        "start": 7.85,
-        "end": 8.09,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "子",
-        "pinyin": "zi",
-        "start": 8.19,
-        "end": 8.39,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "不",
-        "pinyin": "bù",
-        "start": 8.39,
-        "end": 8.55,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "问",
-        "pinyin": "wèn",
-        "start": 8.55,
-        "end": 8.71,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "生",
-        "pinyin": "shēng",
-        "start": 8.71,
-        "end": 8.91,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "父，",
-        "pinyin": "fù",
-        "start": 8.91,
-        "end": 9.15,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      }
-    ],
-    [
-      {
-        "word": "你",
-        "pinyin": "nǐ",
-        "start": 9.15,
-        "end": 9.27,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "觉",
-        "pinyin": "jué",
-        "start": 9.27,
-        "end": 9.37,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "得",
-        "pinyin": "dé",
-        "start": 9.37,
-        "end": 9.49,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "是",
-        "pinyin": "shì",
-        "start": 9.49,
-        "end": 9.59,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "对",
-        "pinyin": "duì",
-        "start": 9.59,
-        "end": 9.73,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "的",
-        "pinyin": "de",
-        "start": 9.73,
-        "end": 9.85,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "吗？",
-        "pinyin": "ma",
-        "start": 9.85,
-        "end": 10.09,
-        "confidence": 0.99,
-        "colorClass": "color-4"
-      }
-    ],
-    [
-      {
-        "word": "英",
-        "pinyin": "yīng",
-        "start": 11.71,
-        "end": 11.95,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "雄",
-        "pinyin": "xióng",
-        "start": 12.01,
-        "end": 12.25,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "不",
-        "pinyin": "bù",
-        "start": 12.39,
-        "end": 12.55,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "问",
-        "pinyin": "wèn",
-        "start": 12.55,
-        "end": 12.79,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "出",
-        "pinyin": "chū",
-        "start": 12.83,
-        "end": 13.01,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "处，",
-        "pinyin": "chù",
-        "start": 13.01,
-        "end": 13.25,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      }
-    ],
-    [
-      {
-        "start": 13.59,
-        "end": 14.15,
-        "word": "富婆",
-        "pinyin": "fù pó",
-        "colorClass": "color-1"
-      },
-      {
-        "start": 14.15,
-        "end": 14.47,
-        "word": "不问",
-        "pinyin": "bù wèn",
-        "colorClass": "color-2"
-      },
-      {
-        "start": 14.47,
-        "end": 15.17,
-        "word": "岁数",
-        "pinyin": "suì shù",
-        "colorClass": "color-3"
-      }
-    ],
-    [
-      {
-        "word": "喝",
-        "pinyin": "hē",
-        "start": 15.41,
-        "end": 15.59,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "酒",
-        "pinyin": "jiǔ",
-        "start": 15.59,
-        "end": 15.83,
-        "confidence": 0.99,
-        "colorClass": "color-1"
-      },
-      {
-        "word": "不",
-        "pinyin": "bù",
-        "start": 15.85,
-        "end": 15.99,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "问",
-        "pinyin": "wèn",
-        "start": 15.99,
-        "end": 16.23,
-        "confidence": 0.99,
-        "colorClass": "color-2"
-      },
-      {
-        "word": "度",
-        "pinyin": "dù",
-        "start": 16.23,
-        "end": 16.41,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      },
-      {
-        "word": "数，",
-        "pinyin": "shù",
-        "start": 16.41,
-        "end": 16.65,
-        "confidence": 0.99,
-        "colorClass": "color-3"
-      }
-    ],
-    [
-      {
-        "word": "软",
-        "pinyin": "ruǎn",
-        "start": 16.93,
-        "end": 17.13,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "word": "做",
+        "pinyin": "zuò",
+        "start": 6.22,
+        "end": 6.44,
+        "confidence": 0.99
       },
       {
         "word": "饭",
         "pinyin": "fàn",
-        "start": 17.13,
-        "end": 17.37,
-        "confidence": 0.99,
-        "colorClass": "color-1"
+        "start": 6.44,
+        "end": 6.68,
+        "confidence": 0.99
       },
       {
-        "word": "才",
-        "pinyin": "cái",
-        "start": 17.41,
-        "end": 17.55,
-        "confidence": 0.99,
-        "colorClass": "color-2"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 7.12,
+        "end": 7.34,
+        "confidence": 0.99
       },
       {
-        "word": "是",
-        "pinyin": "shì",
-        "start": 17.55,
-        "end": 17.75,
-        "confidence": 0.99,
-        "colorClass": "color-2"
+        "word": "妈",
+        "pinyin": "mā",
+        "start": 7.34,
+        "end": 7.58,
+        "confidence": 0.99
       },
       {
-        "word": "归",
-        "pinyin": "guī",
-        "start": 17.75,
-        "end": 17.91,
-        "confidence": 0.99,
-        "colorClass": "color-3"
+        "word": "你",
+        "pinyin": "nǐ",
+        "start": 7.86,
+        "end": 8.04,
+        "confidence": 0.99
       },
       {
-        "word": "宿。",
-        "pinyin": "sù",
-        "start": 17.91,
-        "end": 19.07,
-        "confidence": 0.99,
-        "colorClass": "color-3"
+        "word": "在",
+        "pinyin": "zài",
+        "start": 8.04,
+        "end": 8.28,
+        "confidence": 0.99
+      },
+      {
+        "word": "哪",
+        "pinyin": "nǎ",
+        "start": 8.3,
+        "end": 8.54,
+        "confidence": 0.99
+      },
+      {
+        "word": "里，",
+        "pinyin": "lǐ",
+        "start": 8.58,
+        "end": 8.82,
+        "confidence": 0.99
+      }
+    ],
+    [
+      {
+        "word": "我",
+        "pinyin": "wǒ",
+        "start": 9.78,
+        "end": 10.02,
+        "confidence": 0.99
+      },
+      {
+        "word": "在",
+        "pinyin": "zài",
+        "start": 10.02,
+        "end": 10.26,
+        "confidence": 0.99
+      },
+      {
+        "word": "这",
+        "pinyin": "zhè",
+        "start": 10.28,
+        "end": 10.44,
+        "confidence": 0.99
+      },
+      {
+        "word": "里。",
+        "pinyin": "lǐ",
+        "start": 10.44,
+        "end": 11.52,
+        "confidence": 0.99
       }
     ]
-  ],
-  "translations": [
-    "<span class=\"color-1\">Anh hùng</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">xuất xứ</span>,",
-    "<span class=\"color-1\">câu tiếp theo</span> <span class=\"color-2\">là</span> <span class=\"color-3\">gì?</span>",
-    "<span class=\"color-1\">Con cái</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">cha ruột</span>,",
-    "<span class=\"color-1\">con cái</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">cha ruột</span>,",
-    "<span class=\"color-1\">Con</span> <span class=\"color-2\">thấy thế</span> <span class=\"color-3\">có đúng</span> <span class=\"color-4\">không?</span>",
-    "<span class=\"color-1\">Anh hùng</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">xuất xứ</span>,",
-    "<span class=\"color-1\">phú bà</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">tuổi tác</span>",
-    "<span class=\"color-1\">uống rượu</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">nồng độ</span>,",
-    "<span class=\"color-1\">ăn bám</span> <span class=\"color-2\">mới là</span> <span class=\"color-3\">bến đỗ</span>."
-  ],
-  "vocabulary": [
-    {
-      "word": "英雄",
-      "pinyin": "yīng xióng",
-      "meaning": "anh hùng"
-    },
-    {
-      "word": "出处",
-      "pinyin": "chū chù",
-      "meaning": "xuất xứ, nguồn gốc"
-    },
-    {
-      "word": "富婆",
-      "pinyin": "fù pó",
-      "meaning": "phú bà, nữ đại gia"
-    },
-    {
-      "word": "岁数",
-      "pinyin": "suì shù",
-      "meaning": "tuổi tác"
-    },
-    {
-      "word": "度数",
-      "pinyin": "dù shù",
-      "meaning": "nồng độ (rượu)"
-    },
-    {
-      "word": "软饭",
-      "pinyin": "ruǎn fàn",
-      "meaning": "cơm mềm (ăn bám phụ nữ)"
-    },
-    {
-      "word": "归宿",
-      "pinyin": "guī sù",
-      "meaning": "bến đỗ, nơi nương tựa"
-    }
-  ],
-  "grammar": [
-    {
-      "structure": "不问 (bù wèn)",
-      "explanation": "Động từ 不 (không) kết hợp với 问 (hỏi), tạo thành cụm từ mang ý nghĩa bất chấp, không màng đến, không bận tâm đến điều gì đó."
-    },
-    {
-      "structure": "才是 (cái shì)",
-      "explanation": "Phó từ 才 (mới) kết hợp với động từ 是 (là), dùng để nhấn mạnh kết luận bất ngờ được rút ra ở cuối câu."
-    }
-  ],
-  "hanzi": [
-    {
-      "character": "雄",
-      "components": "隹 (chim) + 厷 (cánh tay)",
-      "meaning": "Chữ 雄 (hùng) mang ý nghĩa là con trống dũng mãnh, suy rộng ra là anh hùng, người kiệt xuất."
-    },
-    {
-      "character": "软",
-      "components": "车 (xe) + 欠 (thiếu)",
-      "meaning": "Chữ 软 (nhuyễn - mềm). Nghĩa gốc là cỗ xe bị thiếu bánh nên đi rất êm và mềm mại."
-    }
   ]
 }
