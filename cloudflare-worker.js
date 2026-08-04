@@ -81,16 +81,18 @@ export default {
         };
         
         await sendMessage(chatId, "⏳ Đã nhận link! Đang kích hoạt FunASR trên Github để bóc bản thô. Hãy đợi 4 phút...", keyboard);
-        await triggerGithubAction("process_video", { video_url: text, chat_id: chatId });
+        
+        // Sử dụng ctx.waitUntil để chạy ngầm, trả về 200 OK ngay lập tức cho Telegram để tránh bị lặp tin nhắn
+        ctx.waitUntil(triggerGithubAction("process_video", { video_url: text, chat_id: chatId }));
       } 
       else if (text === "/start") {
-        await sendMessage(chatId, "👋 Chào mừng Chủ tịch! Hãy ném link video vào đây để bắt đầu dây chuyền cào phụ đề đa hệ.");
+        await sendMessage(chatId, "👋 Chào mừng Chủ tịch! Hãy ném link video vào đây để bắt đầu dây chuyền cào phím đại pháp.");
       }
       else {
         await sendMessage(chatId, "Vui lòng gửi một đường link video hợp lệ (bắt đầu bằng http)!");
       }
     }
 
-    return new Response("OK");
+    return new Response("OK", { status: 200 });
   }
 };
