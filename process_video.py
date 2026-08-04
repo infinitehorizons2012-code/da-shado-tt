@@ -4,7 +4,7 @@ import subprocess
 import json
 import cloudinary
 import cloudinary.uploader
-from funasr import AutoModel
+import requests
 import pypinyin
 
 def setup_cloudinary():
@@ -25,69 +25,84 @@ def upload_to_cloudinary(file_path):
     upload_res = cloudinary.uploader.upload(file_path, resource_type="video")
     return upload_res['secure_url']
 
-def extract_audio(video_path, audio_path="audio.wav"):
+def extract_audio(video_path, audio_path="audio.mp3"):
     print("Extracting audio...")
     subprocess.run(['ffmpeg', '-i', video_path, '-q:a', '0', '-map', 'a', audio_path, '-y'], check=True)
     return audio_path
 
-def process_funasr(audio_path):
-    print("Running FunASR...")
-    # Initialize model
-    model = AutoModel(
-        model="paraformer-zh", 
-        vad_model="fsmn-vad", 
-        punc_model="ct-punc",
-        disable_update=True
-    )
-    
-    # Generate subtitles with timestamps
-    res = model.generate(input=audio_path, batch_size_s=300, return_raw_text=False, timestamp=True)
-    
-    if not res or len(res) == 0:
+def process_whisper_groq(audio_path):
+    print("Running Groq Whisper API...")
+    groq_api_key = os.environ.get('GROQ_API_KEY')
+    if not groq_api_key:
+        print("Error: GROQ_API_KEY environment variable is not set.")
         return []
 
-    res_dict = res[0]
-    text_with_punc = res_dict.get('text', '')
-    timestamps = res_dict.get('timestamp', [])
+    url = "https://api.groq.com/openai/v1/audio/transcriptions"
+    headers = {
+        "Authorization": f"Bearer {groq_api_key}"
+    }
+    data = {
+        "model": "whisper-large-v3",
+        "response_format": "verbose_json",
+        "temperature": "0",
+        "prompt": "Bắt đầu bóc băng phụ đề tiếng Trung một cách chi tiết."
+    }
+    
+    with open(audio_path, "rb") as f:
+        files = {
+            "file": ("audio.mp3", f, "audio/mpeg")
+        }
+        print("Sending request to Groq API...")
+        response = requests.post(url, headers=headers, data=data, files=files)
+        
+    if response.status_code != 200:
+        print(f"Error from Groq API: {response.text}")
+        return []
+        
+    res_json = response.json()
+    segments = res_json.get('segments', [])
     
     sentences = []
-    current_sentence = []
     punc_chars = set('，。！？；：,.!?;:')
-    end_chars = set('，。！？；：,.!?;:')
     
-    timestamp_idx = 0
-    for char in text_with_punc:
-        if char in punc_chars:
-            if current_sentence:
-                current_sentence[-1]['word'] += char
-            # Break sentence if it's an ending punctuation
-            if char in end_chars:
+    for seg in segments:
+        text = seg.get('text', '').strip()
+        start = seg.get('start', 0.0)
+        end = seg.get('end', 0.0)
+        
+        chars = [c for c in text if c not in punc_chars and c.strip()]
+        if not chars:
+            continue
+            
+        duration = end - start
+        char_duration = duration / len(chars) if len(chars) > 0 else 0
+        
+        current_sentence = []
+        current_time = start
+        
+        for char in text:
+            if not char.strip():
+                continue
+            if char in punc_chars:
                 if current_sentence:
-                    sentences.append(current_sentence)
-                    current_sentence = []
-        else:
-            if timestamp_idx < len(timestamps):
-                ts = timestamps[timestamp_idx]
-                start_time = ts[0] / 1000.0  # Convert to seconds
-                end_time = ts[1] / 1000.0
-                
-                # Get Pinyin
+                    current_sentence[-1]['word'] += char
+            else:
                 pinyin_list = pypinyin.pinyin(char, style=pypinyin.Style.TONE)
                 py = pinyin_list[0][0] if pinyin_list else ""
                 
                 word_info = {
                     "word": char,
                     "pinyin": py,
-                    "start": round(start_time, 2),
-                    "end": round(end_time, 2),
-                    "confidence": 0.99  # Mocked as paraformer doesn't easily output word-level conf
+                    "start": round(current_time, 2),
+                    "end": round(current_time + char_duration, 2),
+                    "confidence": 0.99
                 }
                 current_sentence.append(word_info)
-                timestamp_idx += 1
+                current_time += char_duration
                 
-    if current_sentence:
-        sentences.append(current_sentence)
-        
+        if current_sentence:
+            sentences.append(current_sentence)
+            
     return sentences
 
 def main():
@@ -102,15 +117,13 @@ def main():
     cloud_video_url = upload_to_cloudinary(video_path)
     
     audio_path = extract_audio(video_path)
-    subtitles = process_funasr(audio_path)
+    subtitles = process_whisper_groq(audio_path)
     
-    # Structure the final JSON
     final_data = {
         "video_url": cloud_video_url,
         "subtitles": subtitles
     }
     
-    # Save to public/data.json
     os.makedirs('public', exist_ok=True)
     with open('public/data.json', 'w', encoding='utf-8') as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
