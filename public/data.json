@@ -3,230 +3,405 @@
   "subtitles": [
     [
       {
+        "translation": "Anh ơi, mẹ đâu rồi?"
+      },
+      {
         "word": "哥",
         "pinyin": "gē",
         "start": 0.34,
         "end": 0.54,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ca",
+        "meaning": "anh",
+        "color": "#10b981"
       },
       {
         "word": "哥",
         "pinyin": "gē",
         "start": 0.54,
         "end": 0.78,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ca",
+        "meaning": "anh",
+        "color": "#10b981"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 1.16,
         "end": 1.4,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 1.44,
         "end": 1.68,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "呢？",
         "pinyin": "ne",
         "start": 1.68,
         "end": 1.92,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ni",
+        "meaning": "đâu?",
+        "color": "#6b7280"
       }
     ],
     [
+      {
+        "translation": "Mẹ đang ở trong bếp,"
+      },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 2.54,
         "end": 2.78,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 2.82,
         "end": 3.0,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "在",
         "pinyin": "zài",
         "start": 3.0,
         "end": 3.2,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tại",
+        "meaning": "ở / đang",
+        "color": "#3b82f6"
       },
       {
         "word": "厨",
         "pinyin": "chú",
         "start": 3.2,
         "end": 3.4,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "trù",
+        "meaning": "bếp",
+        "color": "#f59e0b"
       },
       {
         "word": "房，",
         "pinyin": "fáng",
         "start": 3.4,
         "end": 3.64,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "phòng",
+        "meaning": "phòng",
+        "color": "#f59e0b"
       }
     ],
     [
+      {
+        "translation": "Mẹ đang làm gì thế?"
+      },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 4.08,
         "end": 4.3,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 4.3,
         "end": 4.5,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "在",
         "pinyin": "zài",
         "start": 4.5,
         "end": 4.72,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tại",
+        "meaning": "ở / đang",
+        "color": "#3b82f6"
       },
       {
         "word": "做",
         "pinyin": "zuò",
         "start": 4.72,
         "end": 4.96,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tác",
+        "meaning": "làm",
+        "color": "#ef4444"
       },
       {
         "word": "什",
         "pinyin": "shén",
         "start": 4.98,
         "end": 5.14,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "thập",
+        "meaning": "cái",
+        "color": "#8b5cf6"
       },
       {
         "word": "么？",
         "pinyin": "me",
         "start": 5.14,
         "end": 5.38,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "gì?",
+        "color": "#8b5cf6"
       }
     ],
     [
+      {
+        "translation": "Mẹ đang nấu cơm. Mẹ ơi mẹ ở đâu vậy?"
+      },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 5.66,
         "end": 5.84,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 5.84,
         "end": 6.02,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "在",
         "pinyin": "zài",
         "start": 6.02,
         "end": 6.22,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tại",
+        "meaning": "ở / đang",
+        "color": "#3b82f6"
       },
       {
         "word": "做",
         "pinyin": "zuò",
         "start": 6.22,
         "end": 6.44,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tác",
+        "meaning": "làm",
+        "color": "#ef4444"
       },
       {
         "word": "饭",
         "pinyin": "fàn",
         "start": 6.44,
         "end": 6.68,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "phạn",
+        "meaning": "cơm",
+        "color": "#f59e0b"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 7.12,
         "end": 7.34,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "妈",
         "pinyin": "mā",
         "start": 7.34,
         "end": 7.58,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ma",
+        "meaning": "mẹ",
+        "color": "#ec4899"
       },
       {
         "word": "你",
         "pinyin": "nǐ",
         "start": 7.86,
         "end": 8.04,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "nễ",
+        "meaning": "bạn / mẹ",
+        "color": "#3b82f6"
       },
       {
         "word": "在",
         "pinyin": "zài",
         "start": 8.04,
         "end": 8.28,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tại",
+        "meaning": "ở / đang",
+        "color": "#3b82f6"
       },
       {
         "word": "哪",
         "pinyin": "nǎ",
         "start": 8.3,
         "end": 8.54,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ná",
+        "meaning": "nào",
+        "color": "#8b5cf6"
       },
       {
         "word": "里，",
         "pinyin": "lǐ",
         "start": 8.58,
         "end": 8.82,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "lý",
+        "meaning": "trong",
+        "color": "#8b5cf6"
       }
     ],
     [
+      {
+        "translation": "Mẹ ở đây này."
+      },
       {
         "word": "我",
         "pinyin": "wǒ",
         "start": 9.78,
         "end": 10.02,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "ngã",
+        "meaning": "tôi / mẹ",
+        "color": "#3b82f6"
       },
       {
         "word": "在",
         "pinyin": "zài",
         "start": 10.02,
         "end": 10.26,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "tại",
+        "meaning": "ở / đang",
+        "color": "#3b82f6"
       },
       {
         "word": "这",
         "pinyin": "zhè",
         "start": 10.28,
         "end": 10.44,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "giá",
+        "meaning": "này",
+        "color": "#8b5cf6"
       },
       {
         "word": "里。",
         "pinyin": "lǐ",
         "start": 10.44,
         "end": 11.52,
-        "confidence": 0.99
+        "confidence": 0.99,
+        "hanviet": "lý",
+        "meaning": "trong",
+        "color": "#8b5cf6"
       }
     ]
+  ],
+  "grammar": [
+    {
+      "structure": "在 (zài) + Nơi chốn",
+      "description": "Giới từ chỉ địa điểm: 'Ở đâu đó'. Ví dụ: 在厨房 (Ở nhà bếp).",
+      "example": "妈妈在厨房。 (Mẹ ở trong bếp.)"
+    },
+    {
+      "structure": "在 (zài) + Động từ",
+      "description": "Phó từ chỉ hành động đang diễn ra: 'Đang làm gì'. Ví dụ: 在做什么 (Đang làm gì), 在做饭 (Đang nấu cơm).",
+      "example": "妈妈在做饭。 (Mẹ đang nấu cơm.)"
+    },
+    {
+      "structure": "Danh từ / Đại từ + 呢 (ne)",
+      "description": "Trợ từ nghi vấn dùng để hỏi vị trí của người hoặc vật đã được nhắc đến: '... đâu rồi?'.",
+      "example": "妈妈呢？ (Mẹ đâu rồi?)"
+    }
+  ],
+  "hanzi_components": [
+    {
+      "word": "妈",
+      "pinyin": "mā",
+      "meaning": "Mẹ",
+      "components": "女 (Nữ: phụ nữ) + 马 (Mã: con ngựa - chỉ âm thanh)",
+      "explanation": "Chữ 妈 gồm bộ Nữ (chỉ ý nghĩa là người phụ nữ) và chữ Mã (chỉ cách phát âm giống 'ma')."
+    },
+    {
+      "word": "厨",
+      "pinyin": "chú",
+      "meaning": "Bếp",
+      "components": "厂 (Hán: sườn núi/xưởng) + 豆 (Đậu: hạt đậu) + 寸 (Thốn: tấc)",
+      "explanation": "Nơi (厂) có thức ăn (豆) và đo lường/cắt thái (寸) chính là nhà bếp."
+    },
+    {
+      "word": "饭",
+      "pinyin": "fàn",
+      "meaning": "Cơm / Bữa ăn",
+      "components": "饣 (Thực: đồ ăn) + 反 (Phản: lật lại - chỉ âm)",
+      "explanation": "Bộ Thực (liên quan đến thức ăn) kết hợp với chữ Phản (chỉ cách đọc)."
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "哥哥",
+      "pinyin": "gē ge",
+      "meaning": "Anh trai"
+    },
+    {
+      "word": "厨房",
+      "pinyin": "chú fáng",
+      "meaning": "Nhà bếp"
+    },
+    {
+      "word": "做饭",
+      "pinyin": "zuò fàn",
+      "meaning": "Nấu cơm"
+    },
+    {
+      "word": "哪里",
+      "pinyin": "nǎ lǐ",
+      "meaning": "Ở đâu"
+    },
+    {
+      "word": "这里",
+      "pinyin": "zhè lǐ",
+      "meaning": "Ở đây"
+    }
   ]
 }
