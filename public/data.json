@@ -313,16 +313,23 @@
             {
                 "start": 13.59,
                 "end": 14.15,
-                "word": "缘分",
-                "pinyin": "yuán fèn",
+                "word": "富婆",
+                "pinyin": "fù pó",
                 "colorClass": "color-1"
             },
             {
                 "start": 14.15,
-                "end": 15.17,
-                "word": "阴错阳差，",
-                "pinyin": "yīn cuò yáng chā,",
+                "end": 14.47,
+                "word": "不问",
+                "pinyin": "bù wèn",
                 "colorClass": "color-2"
+            },
+            {
+                "start": 14.47,
+                "end": 15.17,
+                "word": "岁数",
+                "pinyin": "suì shù",
+                "colorClass": "color-3"
             }
         ],
         [
@@ -433,7 +440,7 @@
         "<span class=\"color-1\">con cái</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">cha ruột</span>,",
         "<span class=\"color-1\">Con</span> <span class=\"color-2\">thấy thế</span> <span class=\"color-3\">có đúng</span> <span class=\"color-4\">không?</span>",
         "<span class=\"color-1\">Anh hùng</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">xuất xứ</span>,",
-        "<span class=\"color-1\">duyên phận</span> <span class=\"color-2\">trớ trêu,</span>",
+        "<span class=\"color-1\">phú bà</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">tuổi tác</span>",
         "<span class=\"color-1\">uống rượu</span> <span class=\"color-2\">không màng</span> <span class=\"color-3\">nồng độ</span>,",
         "<span class=\"color-1\">ăn bám</span> <span class=\"color-2\">mới là</span> <span class=\"color-3\">bến đỗ</span>."
     ]
