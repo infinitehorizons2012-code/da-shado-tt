@@ -178,7 +178,7 @@
     ],
     [
       {
-        "translation": "Mẹ đang nấu cơm. Mẹ ơi mẹ ở đâu vậy?"
+        "translation": "Mẹ đang nấu cơm."
       },
       {
         "word": "妈",
@@ -229,6 +229,11 @@
         "hanviet": "phạn",
         "meaning": "cơm",
         "color": "#f59e0b"
+      }
+    ],
+    [
+      {
+        "translation": "Mẹ ơi mẹ ở đâu vậy?"
       },
       {
         "word": "妈",
