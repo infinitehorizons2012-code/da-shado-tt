@@ -1,85 +1,96 @@
-// Cloudflare Worker Script
-// This script receives the webhook from Telegram and triggers the GitHub Action
-
 export default {
   async fetch(request, env, ctx) {
-    // Only accept POST requests from Telegram
+    // Chỉ chấp nhận POST request từ Telegram
     if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
+      return new Response("Antigravity Orchestrator is running!");
     }
 
-    try {
-      const update = await request.json();
+    const payload = await request.json();
 
-      // Check if there is a message with text
-      if (update.message && update.message.text) {
-        const text = update.message.text;
-        
-        // Simple regex to extract URL from the message
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const urls = text.match(urlRegex);
+    // ----------------------------------------------------
+    // HÀM TIỆN ÍCH: GỬI TIN NHẮN TELEGRAM
+    // ----------------------------------------------------
+    const sendMessage = async (chat_id, text, reply_markup = null) => {
+      const url = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+      const body = { chat_id, text, parse_mode: "HTML" };
+      if (reply_markup) body.reply_markup = reply_markup;
+      
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+    };
 
-        if (urls && urls.length > 0) {
-          const videoUrl = urls[0];
+    // ----------------------------------------------------
+    // HÀM TIỆN ÍCH: KÍCH HOẠT GITHUB ACTIONS (BƯỚC 1 & 3)
+    // ----------------------------------------------------
+    const triggerGithubAction = async (eventType, clientPayload) => {
+      const url = `https://api.github.com/repos/${env.GITHUB_REPO}/dispatches`;
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Accept": "application/vnd.github.v3+json",
+          "Authorization": `Bearer ${env.GITHUB_PAT}`,
+          "User-Agent": "Cloudflare-Worker"
+        },
+        body: JSON.stringify({
+          event_type: eventType,
+          client_payload: clientPayload
+        })
+      });
+    };
 
-          // Trigger GitHub Repository Dispatch
-          // NOTE: Replace 'infinitehorizons2012-code' and 'da-shado-tt' with your actual username and repo name if different
-          const githubRepoUrl = `https://api.github.com/repos/infinitehorizons2012-code/da-shado-tt/dispatches`;
-          
-          const githubResponse = await fetch(githubRepoUrl, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/vnd.github.v3+json',
-              'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-              'Content-Type': 'application/json',
-              'User-Agent': 'Cloudflare-Worker'
-            },
-            body: JSON.stringify({
-              event_type: 'process_video',
-              client_payload: {
-                video_url: videoUrl,
-                chat_id: update.message.chat.id
-              }
-            })
-          });
+    // ====================================================
+    // XỬ LÝ SỰ KIỆN: BẤM NÚT (CALLBACK QUERIES)
+    // ====================================================
+    if (payload.callback_query) {
+      const chatId = payload.callback_query.message.chat.id;
+      const data = payload.callback_query.data;
 
-          if (githubResponse.ok) {
-            // Reply back to Telegram
-            await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, "⏳ Đã nhận link! Đang kích hoạt FunASR trên Github để bóc bản thô. Hãy đợi 4 phút...");
-            return new Response("OK", { status: 200 });
-          } else {
-            const errorText = await githubResponse.text();
-            await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, `Lỗi khi gọi GitHub: ${errorText}`);
-            return new Response("GitHub Error", { status: 500 });
-          }
-        } else if (text === "STEP_2") {
-          const promptMessage = "💡 **BƯỚC 2: PHÂN TÍCH HỌC THUẬT**\n\nBạn hãy mở **Antigravity IDE** lên, copy câu lệnh dưới đây và gửi cho AI:\n\n👉 *\"Tớ vừa bóc xong phụ đề video mới lưu ở file public/data.json, cậu hãy tiến hành dịch thuật Hán - Việt, phân tích ngữ pháp, Hán Nôm, tô màu từ vựng và cập nhật file giúp tớ nhé!\"*";
-          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, promptMessage);
-          return new Response("OK", { status: 200 });
-        } else {
-          // No URL found in message
-          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, update.message.chat.id, "Vui lòng gửi cho tôi một đường link video hợp lệ (YouTube, TikTok, Douyin...).");
-          return new Response("OK", { status: 200 });
-        }
+      // XỬ LÝ BƯỚC 2: ANTIGRAVITY LOCAL
+      if (data === "STEP_2") {
+        const promptMessage = "💡 **BƯỚC 2: PHÂN TÍCH HỌC THUẬT**\n\nBạn hãy mở **Antigravity IDE** lên, copy câu lệnh dưới đây và gửi cho AI:\n\n👉 *\"Tớ vừa bóc xong phụ đề video mới lưu ở file public/data.json, cậu hãy tiến hành dịch thuật Hán - Việt, phân tích ngữ pháp, Hán Nôm, tô màu từ vựng và cập nhật file giúp tớ nhé!\"*";
+        await sendMessage(chatId, promptMessage);
+        return new Response("OK");
       }
 
-      return new Response("OK", { status: 200 });
-    } catch (e) {
-      return new Response(e.toString(), { status: 500 });
+      // XỬ LÝ BƯỚC 3: ĐÓNG GÓI TRÊN CLOUD
+      if (data === "STEP_3") {
+        await sendMessage(chatId, "🚀 Đang đóng gói bản HTML Thương Mại trên Đám mây. File sẽ sớm được gửi lại cho bạn!");
+        await triggerGithubAction("process_video", { chat_id: chatId }); // Tuỳ biến event_type theo Workflow Bước 3 của bạn
+        return new Response("OK");
+      }
     }
-  },
-};
 
-async function sendTelegramMessage(token, chatId, text) {
-  const url = `https://api.telegram.org/bot${token}/sendMessage`;
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: text,
-    })
-  });
-}
+    // ====================================================
+    // XỬ LÝ SỰ KIỆN: GỬI TIN NHẮN TEXT (VIDEO LINK)
+    // ====================================================
+    if (payload.message && payload.message.text) {
+      const chatId = payload.message.chat.id;
+      const text = payload.message.text;
+
+      // Nhận Link Video để kích hoạt Bước 1
+      if (text.startsWith("http")) {
+        // Tạo bàn phím điều khiển
+        const keyboard = {
+          inline_keyboard: [
+            [{ text: "▶️ Bước 2: Dịch thuật (Local AI)", callback_data: "STEP_2" }],
+            [{ text: "📦 Bước 3: Đóng gói HTML (Cloud)", callback_data: "STEP_3" }]
+          ]
+        };
+        
+        await sendMessage(chatId, "⏳ Đã nhận link! Đang kích hoạt FunASR trên Github để bóc bản thô. Hãy đợi 4 phút...", keyboard);
+        await triggerGithubAction("process_video", { video_url: text, chat_id: chatId });
+      } 
+      else if (text === "/start") {
+        await sendMessage(chatId, "👋 Chào mừng Chủ tịch! Hãy ném link video vào đây để bắt đầu dây chuyền cào phụ đề đa hệ.");
+      }
+      else {
+        await sendMessage(chatId, "Vui lòng gửi một đường link video hợp lệ (bắt đầu bằng http)!");
+      }
+    }
+
+    return new Response("OK");
+  }
+};
